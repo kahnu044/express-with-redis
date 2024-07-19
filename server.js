@@ -1,24 +1,8 @@
 const express = require('express');
-const redis = require('redis');
+const client = require('./config/redisClient');
 
 const app = express();
 const port = 3000;
-
-// Create and connect a Redis client
-const client = redis.createClient();
-
-client.on('error', (err) => {
-    console.error('Redis error: ', err);
-});
-
-client.connect().then(() => {
-    console.log('Connected to Redis');
-});
-
-// Check if Redis client is open
-if (!client.isOpen) {
-    console.log('Redis client is not open');
-}
 
 /**
  * Simulates fetching user data from a database.
