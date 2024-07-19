@@ -129,6 +129,9 @@ app.get("/user/:id", checkRadisCache, async (req, res) => {
 });
 ```
 
+## Official Docs for redis client with nodejs
+[https://redis.io/docs/latest/develop/connect/clients/nodejs/](https://redis.io/docs/latest/develop/connect/clients/nodejs/)
+
 ## Author
 
 [Kahnu Charan Swain](https://github.com/kahnu044)
