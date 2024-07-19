@@ -43,14 +43,27 @@ This repository contains an example of an Express server integrated with Redis f
 
 ## Code Overview
 
-### 1. Redis Client Initialization:
+### 1. Redis Client Initialization(redisClient.js):
+
 ```javascript
+const redis = require("redis");
+
+// Create and configure a Redis client
 const client = redis.createClient();
-client.on("error", (err) => console.error("Redis error: ", err));
-client.connect().then(() => console.log("Connected to Redis"));
+
+client.on("error", (err) => {
+  console.error("Redis error: ", err);
+});
+
+client.connect().then(() => {
+  console.log("Connected to Redis");
+});
+
+module.exports = client;
 ```
 
 ### 2. fetchUserDataFromDatabase:
+
 A function that simulates fetching user data from a database with a 1-second delay.
 
 ```javascript
@@ -64,6 +77,7 @@ const fetchUserDataFromDatabase = async (id) => {
 ```
 
 ### 3. checkRadisCache:
+
 Middleware that checks if the requested data is in the Redis cache..
 
 ```javascript
@@ -84,6 +98,7 @@ const checkRadisCache = async (req, res, next) => {
 ```
 
 ### 4. Route - GET /user/:id:
+
 Route that handles fetching user data, either from the cache or the "database".
 
 ```javascript
@@ -113,7 +128,6 @@ app.get("/user/:id", checkRadisCache, async (req, res) => {
   }
 });
 ```
-
 
 ## Author
 
