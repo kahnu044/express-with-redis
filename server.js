@@ -20,6 +20,11 @@ if (!client.isOpen) {
     console.log('Redis client is not open');
 }
 
+/**
+ * Simulates fetching user data from a database.
+ * @param {string} id - The user ID.
+ * @returns {Promise<Object>} - A promise that resolves to the user data.
+ */
 const fetchUserDataFromDatabase = async (id) => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -28,6 +33,13 @@ const fetchUserDataFromDatabase = async (id) => {
     });
 };
 
+/**
+ * Middleware to check if the requested data is in the Redis cache.
+ * If found, sends the cached data as a response; otherwise, calls next().
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ */
 const checkRadisCache = async (req, res, next) => {
     const { id } = req.params;
     try {
@@ -43,6 +55,11 @@ const checkRadisCache = async (req, res, next) => {
     }
 };
 
+/**
+ * Route to get user data.
+ * If the data is not found in the Redis cache, it fetches from the database,
+ * stores it in Redis with an expiration time, and then sends the data as a response.
+ */
 app.get('/user/:id', checkRadisCache, async (req, res) => {
     const { id } = req.params;
 
